@@ -314,9 +314,9 @@ section {
 }
 
 .skill-icon {
-    font-size: 2.5rem;
+    width: 48px;
+    height: 48px;
     flex-shrink: 0;
-    line-height: 1;
 }
 
 .skill-item span:last-child {
