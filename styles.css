@@ -299,16 +299,16 @@ section {
 
 .skill-item {
     background: var(--bg-secondary);
-    padding: 1.25rem 1.5rem;
+    padding: 0.875rem 1.25rem;
     border-radius: 8px;
     border: 1px solid var(--border);
-    text-align: center;
     font-weight: 500;
     transition: all 0.3s ease;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: 0.75rem;
+    justify-content: flex-start;
 }
 
 .skill-item img,
@@ -317,8 +317,9 @@ section {
 }
 
 .skill-item span {
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     color: var(--text-primary);
+    white-space: nowrap;
 }
 
 .skill-item:hover {
