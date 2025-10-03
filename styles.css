@@ -299,7 +299,7 @@ section {
 
 .skill-item {
     background: var(--bg-secondary);
-    padding: 0.875rem 1.25rem;
+    padding: 0.75rem 1.25rem;
     border-radius: 8px;
     border: 1px solid var(--border);
     font-weight: 500;
@@ -311,12 +311,12 @@ section {
     justify-content: flex-start;
 }
 
-.skill-item img,
-.skill-item svg {
+.skill-icon {
+    font-size: 1.25rem;
     flex-shrink: 0;
 }
 
-.skill-item span {
+.skill-item span:last-child {
     font-size: 0.9rem;
     color: var(--text-primary);
     white-space: nowrap;
@@ -328,9 +328,8 @@ section {
     background: rgba(0, 255, 136, 0.05);
 }
 
-.skill-item:hover img,
-.skill-item:hover svg {
-    transform: scale(1.1);
+.skill-item:hover .skill-icon {
+    transform: scale(1.15);
     transition: transform 0.3s ease;
 }
 
