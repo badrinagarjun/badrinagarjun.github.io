@@ -69,45 +69,58 @@ tabBtns.forEach(btn => {
     });
 });
 
-// Contact Form Handling
+// Contact Form Handling with EmailJS
 const contactForm = document.getElementById('contactForm');
+
+// Initialize EmailJS with your Public Key
+// Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+emailjs.init('YOUR_PUBLIC_KEY');
 
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        message: document.getElementById('message').value
+    // Get submit button
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.textContent;
+    
+    // Show loading state
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    
+    // Prepare template parameters
+    const templateParams = {
+        from_name: document.getElementById('name').value,
+        from_email: document.getElementById('email').value,
+        message: document.getElementById('message').value,
+        to_name: 'Badri Nagarjun' // Your name
     };
     
-    // Simulate form submission
-    console.log('Form Data:', formData);
-    
-    // Show success message
-    alert('Thank you for your message! I will get back to you soon.');
-    
-    // Reset form
-    contactForm.reset();
-    
-    // In production, you would send this data to a backend service:
-    // fetch('/api/contact', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(formData)
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     console.log('Success:', data);
-    //     alert('Message sent successfully!');
-    //     contactForm.reset();
-    // })
-    // .catch((error) => {
-    //     console.error('Error:', error);
-    //     alert('Failed to send message. Please try again.');
-    // });
+    // Send email using EmailJS
+    // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+        .then((response) => {
+            console.log('SUCCESS!', response.status, response.text);
+            
+            // Show success message
+            alert('✅ Thank you for your message! I will get back to you soon.');
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Reset button
+            submitBtn.textContent = originalBtnText;
+            submitBtn.disabled = false;
+        })
+        .catch((error) => {
+            console.error('FAILED...', error);
+            
+            // Show error message
+            alert('❌ Oops! Something went wrong. Please try again or email me directly.');
+            
+            // Reset button
+            submitBtn.textContent = originalBtnText;
+            submitBtn.disabled = false;
+        });
 });
 
 // Intersection Observer for Fade-in Animations
