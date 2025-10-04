@@ -69,58 +69,26 @@ tabBtns.forEach(btn => {
     });
 });
 
-// Contact Form Handling with EmailJS
+// Contact Form Handling
 const contactForm = document.getElementById('contactForm');
-
-// Initialize EmailJS with your Public Key
-// Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
-emailjs.init('YOUR_PUBLIC_KEY');
 
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    // Get submit button
-    const submitBtn = contactForm.querySelector('button[type="submit"]');
-    const originalBtnText = submitBtn.textContent;
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
     
-    // Show loading state
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
+    // Create mailto link with pre-filled content
+    const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+    const mailtoLink = `mailto:your-email@gmail.com?subject=${subject}&body=${body}`;
     
-    // Prepare template parameters
-    const templateParams = {
-        from_name: document.getElementById('name').value,
-        from_email: document.getElementById('email').value,
-        message: document.getElementById('message').value,
-        to_name: 'Badri Nagarjun' // Your name
-    };
+    // Open email client
+    window.location.href = mailtoLink;
     
-    // Send email using EmailJS
-    // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual IDs
-    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
-        .then((response) => {
-            console.log('SUCCESS!', response.status, response.text);
-            
-            // Show success message
-            alert('✅ Thank you for your message! I will get back to you soon.');
-            
-            // Reset form
-            contactForm.reset();
-            
-            // Reset button
-            submitBtn.textContent = originalBtnText;
-            submitBtn.disabled = false;
-        })
-        .catch((error) => {
-            console.error('FAILED...', error);
-            
-            // Show error message
-            alert('❌ Oops! Something went wrong. Please try again or email me directly.');
-            
-            // Reset button
-            submitBtn.textContent = originalBtnText;
-            submitBtn.disabled = false;
-        });
+    // Reset form
+    contactForm.reset();
 });
 
 // Intersection Observer for Fade-in Animations
