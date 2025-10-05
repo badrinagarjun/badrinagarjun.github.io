@@ -69,26 +69,48 @@ tabBtns.forEach(btn => {
     });
 });
 
-// Contact Form Handling
+// Contact Form Handling with Formspree
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', (e) => {
+contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.textContent;
     
-    // Create mailto link with pre-filled content
-    const subject = encodeURIComponent(`Portfolio Contact from ${name}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-    const mailtoLink = `mailto:your-email@gmail.com?subject=${subject}&body=${body}`;
+    // Show loading state
+    submitBtn.textContent = 'SENDING...';
+    submitBtn.disabled = true;
     
-    // Open email client
-    window.location.href = mailtoLink;
+    // Get form data
+    const formData = new FormData(contactForm);
     
-    // Reset form
-    contactForm.reset();
+    try {
+        // Send to Formspree
+        const response = await fetch(contactForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
+            // Success
+            alert('✅ Thank you for your message! I will get back to you soon.');
+            contactForm.reset();
+        } else {
+            // Error
+            throw new Error('Form submission failed');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('❌ Oops! Something went wrong. Please try again or email me directly at badrinagarjun.k@gmail.com');
+    } finally {
+        // Reset button
+        submitBtn.textContent = originalBtnText;
+        submitBtn.disabled = false;
+    }
 });
 
 // Intersection Observer for Fade-in Animations
