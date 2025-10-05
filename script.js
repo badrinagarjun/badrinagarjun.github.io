@@ -123,6 +123,50 @@ contactForm.addEventListener('submit', async (e) => {
     }
 });
 
+// Typewriter Effect for Hero Title
+const heroTitle = document.querySelector('.hero-title');
+if (heroTitle) {
+    const originalHTML = heroTitle.innerHTML;
+    heroTitle.innerHTML = '';
+    
+    let charIndex = 0;
+    const textArray = originalHTML.split('');
+    let isInsideTag = false;
+    let tempHTML = '';
+    
+    function typeWriter() {
+        if (charIndex < textArray.length) {
+            const currentChar = textArray[charIndex];
+            
+            // Check if we're entering or leaving an HTML tag
+            if (currentChar === '<') {
+                isInsideTag = true;
+            }
+            
+            tempHTML += currentChar;
+            
+            if (currentChar === '>') {
+                isInsideTag = false;
+            }
+            
+            // Update display (show cursor effect)
+            heroTitle.innerHTML = tempHTML + '<span class="cursor">|</span>';
+            
+            charIndex++;
+            
+            // Speed up when inside tags, slow down for visible text
+            const speed = isInsideTag ? 0 : 50;
+            setTimeout(typeWriter, speed);
+        } else {
+            // Remove cursor when done
+            heroTitle.innerHTML = tempHTML;
+        }
+    }
+    
+    // Start typing after a short delay
+    setTimeout(typeWriter, 500);
+}
+
 // Intersection Observer for Fade-in Animations
 const observerOptions = {
     threshold: 0.1,
