@@ -78,6 +78,16 @@ contactForm.addEventListener('submit', async (e) => {
     const submitBtn = contactForm.querySelector('button[type="submit"]');
     const originalBtnText = submitBtn.textContent;
     
+    // Validate fields manually
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    
+    if (!name || !email || !message) {
+        alert('⚠️ Please fill in all fields correctly.');
+        return;
+    }
+    
     // Show loading state
     submitBtn.textContent = 'SENDING...';
     submitBtn.disabled = true;
