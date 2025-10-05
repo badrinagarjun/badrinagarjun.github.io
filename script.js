@@ -193,27 +193,6 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 });
 
-// Typing Effect for Hero Title (Optional Enhancement)
-const heroTitle = document.querySelector('.hero-title');
-if (heroTitle && heroTitle.textContent.includes("I'm a developer")) {
-    const originalText = heroTitle.innerHTML;
-    heroTitle.innerHTML = '';
-    
-    let charIndex = 0;
-    const typeSpeed = 30;
-    
-    function typeWriter() {
-        if (charIndex < originalText.length) {
-            heroTitle.innerHTML += originalText.charAt(charIndex);
-            charIndex++;
-            setTimeout(typeWriter, typeSpeed);
-        }
-    }
-    
-    // Start typing after a short delay
-    setTimeout(typeWriter, 500);
-}
-
 // Parallax Effect for Hero Section
 const hero = document.querySelector('.hero');
 if (hero) {
